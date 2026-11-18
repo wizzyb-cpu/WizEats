@@ -7,17 +7,16 @@
 ## 2. Install Supabase CLI and link
 - Install CLI following the official Supabase CLI docs.
 - From the repository root, run `supabase login`, then `supabase link --project-ref YOUR_PROJECT_REF`.
-- Deploy functions:
+- Deploy functions (webhook is public by design, protected by Flutterwave's signature hash):
   - `supabase functions deploy create-payment`
-  - `supabase functions deploy flutterwave-webhook`
+  - `supabase functions deploy flutterwave-webhook --no-verify-jwt`
 
 ## 3. Configure secrets (test-mode keys first)
 Set server-side secrets only, not in frontend env or Git:
 ```sh
 supabase secrets set FLW_SECRET_KEY=YOUR_FLUTTERWAVE_TEST_SECRET FLW_WEBHOOK_SECRET_HASH=YOUR_RANDOM_WEBHOOK_SECRET SITE_URL=https://YOUR_SITE_URL
-`
-
-Supabase automatically injects SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY into Edge Functions.
+```
+Supabase automatically injects `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` into Edge Functions.
 
 ## 4. Configure Flutterwave webhook
 In Flutterwave dashboard, set webhook URL to:
